@@ -123,17 +123,77 @@
 
 
 // 排序
+// let MongoClient = require('mongodb').MongoClient
+// let url = 'mongodb://127.0.0.1:27017'
+
+// MongoClient.connect(url, function (err, db) {
+//     if (err) throw err;
+//     let dbo = db.db('runoobsss');
+//     let whereStr = {"type":'en'};  // 查询条件
+//     let mysort = {"type": 1}; // 按type 字段升序
+//     dbo.collection('site').find({}).sort(mysort).limit(2).toArray(function (err, result) {
+//         if (err) throw err;
+//         console.log(result);
+//         db.close();
+//     })
+// })
+
+// 新集合
+// let MongoClient = require('mongodb').MongoClient
+// let url = 'mongodb://127.0.0.1:27017'
+
+// MongoClient.connect(url, function (err, db) {
+//     if (err) throw err;
+//     let myobj1 = [{ _id: 0, product_id: 1, status: 2 }];
+//     let myobj2 = [{ _id: 1, name: '笔记本电脑' },{ _id: 2, name: '耳机' },{ _id: 3, name: '台式电脑' }];
+//     let dbo = db.db('runoobsss');
+//     dbo.collection('orders').insertMany(myobj1, function (err, result) {
+//         if (err) throw err;
+//         console.log(result);
+//         db.close();
+//     })
+//     dbo.collection('products').insertMany(myobj2, function (err, result) {
+//         if (err) throw err;
+//         console.log(result);
+//         db.close();
+//     })
+// })
+
+// 实现左链接
+// let MongoClient = require('mongodb').MongoClient
+// let url = 'mongodb://127.0.0.1:27017'
+
+// MongoClient.connect(url, function (err, db) {
+//     if (err) throw err;
+//     let dbo = db.db('runoobsss');
+//     dbo.collection('orders').aggregate([
+//         {
+//             $lookup: {
+//                 from: 'products',            // 右集合
+//                 localField: '_id',    // 左集合 join 字段
+//                 foreignField: '_id',         // 右集合 join 字段
+//                 as: 'orderdetails'           // 新生成字段（类型array）
+//             }
+//         }
+//     ]).toArray(function (err, res) {
+//         if (err) throw err;
+//         console.log(JSON.stringify(res));
+//         db.close();
+//     })
+// })
+
+// 删除集合
+
 let MongoClient = require('mongodb').MongoClient
 let url = 'mongodb://127.0.0.1:27017'
 
 MongoClient.connect(url, function (err, db) {
     if (err) throw err;
     let dbo = db.db('runoobsss');
-    let whereStr = {"type":'en'};  // 查询条件
-    let mysort = {"type": 1}; // 按type 字段升序
-    dbo.collection('site').find({}).sort(mysort).limit(2).toArray(function (err, result) {
-        if (err) throw err;
-        console.log(result);
-        db.close();
+    dbo.collection('site').drop( function (err, res) {
+        if(err) throw err;
+        if(res) console.log('删除集合成功');
+        db.close;
+        
     })
 })
